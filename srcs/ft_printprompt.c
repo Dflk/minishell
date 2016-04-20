@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/13 15:19:20 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/13 16:18:42 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/04/20 16:19:15 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_printprompt(void)
 {
-	char 	buf[256];
-	char 	*pwd;
+	char	buf[256];
+	char	*pwd;
 
 	pwd = getcwd(buf, 256);
 	ft_putstr("\033[32m");

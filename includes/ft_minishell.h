@@ -6,13 +6,14 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/12 12:55:30 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/15 15:45:36 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/04/20 11:33:55 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MINISHELL
-# define FT_MINISHELL
+#ifndef FT_MINISHELL_H
+# define FT_MINISHELL_H
 # include <libft.h>
+# include "minishell_typedefs.h"
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <dirent.h>
@@ -28,25 +29,12 @@
 /*
 ** Error Type
 */
-# define CMD_NOTFOUND "command not found"
-# define FILE_NOTFOUND "no such file or directory"
-# define FILE_NOTDIR "not a directory"
-# define FILE_PERMDENIED "permission denied"
-
-typedef struct dirent	t_dirent;
-
-typedef struct	s_bin
-{
-	char			*name;
-	char			*path;
-	struct s_bin	*next;
-}				t_bin;
-
-typedef struct	s_conf
-{
-	t_bin	*bin;
-	char	**env;
-}				t_conf;
+# define CMD_NOTFOUND		"command not found"
+# define FILE_NOTFOUND		"no such file or directory"
+# define FILE_NOTDIR		"not a directory"
+# define FILE_PERMDENIED	"permission denied"
+# define FEW_ARG			"Too few arguments"
+# define MANY_ARG			"Too many arguments"
 
 /*
 ** Error function
@@ -59,19 +47,23 @@ void	ft_error(char *name, char *error, int flag_exit);
 t_bin	*ft_findlast(t_bin *bin);
 
 /*
-** Creating env
+** Creating config (environment + bin)
 */
 t_conf	*ft_fillconf(char **env);
 
 /*
-** Parsing environment by variable
+** Manage environment
 */
 char	**ft_parseenv(char **env, char *variable);
+int		ft_findenv(char **env, char *variable);
+char	**ft_fillenv(char **env, size_t size);
+void	ft_printenv(char **env);
 
 /*
 ** Free
 */
 void	ft_free_split(char **split);
+void	ft_free_bin(t_bin **bin);
 
 /*
 ** Shell prompt
@@ -82,6 +74,10 @@ void	ft_printprompt(void);
 ** Builtins
 */
 void	ft_cd(t_conf *config, char **cmd_split);
+void	ft_exit(t_conf *config, char **cmd_split);
+void	ft_unsetenv(t_conf *config, char **cmd_split);
+void	ft_setenv(t_conf *config, char **cmd_split);
+void	ft_env(t_conf *config, char **cmd_split);
 
 /*
 ** Access dir/file
@@ -95,5 +91,10 @@ void	ft_minishell(t_conf *config);
 t_bin	*ft_findcmd(char *cmd, t_bin *cmds);
 void	ft_execcmd(t_bin *cmd, char **cmdline_split, t_conf *config);
 int		ft_findbuiltin(char *cmd);
+
+/*
+** Utils
+*/
+size_t	ft_splitsize(char **split);
 
 #endif

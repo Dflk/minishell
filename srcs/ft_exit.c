@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_findbuiltin.c                                   :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/04/15 12:38:20 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/20 10:05:18 by rbaran           ###   ########.fr       */
+/*   Created: 2016/04/19 09:50:49 by rbaran            #+#    #+#             */
+/*   Updated: 2016/04/19 10:02:39 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_minishell.h>
 
-int		ft_findbuiltin(char *cmd)
+void	ft_exit(t_conf *config, char **cmd_split)
 {
-	if (ft_strcmp(cmd, "cd") == 0)
-		return (0);
-	if (ft_strcmp(cmd, "exit") == 0)
-		return (1);
-	if (ft_strcmp(cmd, "unsetenv") == 0)
-		return (2);
-	if (ft_strcmp(cmd, "env") == 0)
-		return (3);
-	if (ft_strcmp(cmd, "setenv") == 0)
-		return (4);
-	return (-1);
+	int	exit_value;
+
+	exit_value = 0;
+	ft_free_bin(&config->bin);
+	free(config);
+	if (*(cmd_split + 1))
+		exit_value = ft_atoi(*(cmd_split + 1));
+	exit(exit_value);
 }

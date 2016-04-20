@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/15 12:55:38 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/15 13:48:40 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/04/20 12:01:32 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_error(char *name, char *error, int flag_exit)
 {
-	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd("\033[31mminishell\033[0m: ", 2);
 	ft_putstr_fd(error, 2);
 	if (name)
 	{

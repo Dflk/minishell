@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/13 13:06:19 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/15 13:51:49 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/04/20 10:36:56 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@
 static void	ft_checkcmd(char *cmdline, t_conf *config)
 {
 	char		**cmdline_split;
-	static void	(*tabf[1])(t_conf *, char **) = { &ft_cd };
+	static void	(*tabf[5])(t_conf *, char **) = {&ft_cd, &ft_exit,
+		&ft_unsetenv, &ft_env, &ft_setenv};
 	int			builtin;
 	t_bin		*cmd;
 
-	if (!cmdline || !(cmdline_split = ft_strsplit(cmdline, ' ')))
+	if (!cmdline || !*cmdline || !(cmdline_split = ft_strsplit(cmdline, ' ')))
 		return ;
 	if ((builtin = ft_findbuiltin(*cmdline_split)) != -1)
 		(tabf[builtin])(config, cmdline_split);
@@ -35,6 +36,7 @@ void		ft_minishell(t_conf *config)
 	char	*cmdline;
 
 	ft_printprompt();
+	signal(SIGINT, SIG_IGN);
 	while (get_next_line(0, &cmdline))
 	{
 		ft_checkcmd(cmdline, config);

@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/15 12:29:17 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/15 15:57:44 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/04/20 11:35:32 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,8 @@ void	ft_cd(t_conf *config, char **cmd_split)
 	if (ft_accessdir(path))
 		chdir(path);
 	if (parsenv)
+	{
 		ft_free_split(parsenv);
+		free(parsenv);
+	}
 }

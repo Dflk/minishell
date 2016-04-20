@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_findbuiltin.c                                   :+:      :+:    :+:   */
+/*   minishell_typedefs.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/04/15 12:38:20 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/20 10:05:18 by rbaran           ###   ########.fr       */
+/*   Created: 2016/04/19 12:51:24 by rbaran            #+#    #+#             */
+/*   Updated: 2016/04/19 12:53:45 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <ft_minishell.h>
+#ifndef MINISHELL_TYPEDEFS_H
+# define MINISHELL_TYPEDEFS_H
 
-int		ft_findbuiltin(char *cmd)
+typedef struct dirent	t_dirent;
+
+typedef struct	s_bin
 {
-	if (ft_strcmp(cmd, "cd") == 0)
-		return (0);
-	if (ft_strcmp(cmd, "exit") == 0)
-		return (1);
-	if (ft_strcmp(cmd, "unsetenv") == 0)
-		return (2);
-	if (ft_strcmp(cmd, "env") == 0)
-		return (3);
-	if (ft_strcmp(cmd, "setenv") == 0)
-		return (4);
-	return (-1);
-}
+	char			*name;
+	char			*path;
+	struct s_bin	*next;
+}				t_bin;
+
+typedef struct	s_conf
+{
+	t_bin	*bin;
+	char	**env;
+}				t_conf;
+
+#endif

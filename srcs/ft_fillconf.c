@@ -6,11 +6,12 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/13 10:25:02 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/14 12:06:58 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/04/20 14:19:47 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_minishell.h>
+#include <stdio.h>
 
 static t_bin	*ft_addbin(char *name, char *path)
 {
@@ -62,7 +63,8 @@ static t_bin	*ft_readconfpaths(char **paths_bin)
 
 	paths_bin_buf = paths_bin;
 	bin = NULL;
-	while (*paths_bin++)
+	while (*paths_bin)
+	{
 		if (!(stat(*paths_bin, &stats)))
 			if ((directory = opendir(*paths_bin)))
 			{
@@ -78,6 +80,8 @@ static t_bin	*ft_readconfpaths(char **paths_bin)
 				}
 				closedir(directory);
 			}
+		paths_bin++;
+	}
 	return (bin);
 }
 
@@ -89,7 +93,7 @@ t_conf			*ft_fillconf(char **env)
 
 	if (!(config = ft_memalloc(sizeof(t_conf))))
 		return (NULL);
-	config->env = env;
+	config->env = ft_fillenv(env, ft_splitsize(env));
 	split_bins = NULL;
 	split_path_bins = NULL;
 	if ((split_bins = ft_parseenv(config->env, "PATH")))

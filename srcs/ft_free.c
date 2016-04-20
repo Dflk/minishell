@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/13 11:03:31 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/13 11:55:34 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/04/20 11:34:27 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,25 @@
 
 void	ft_free_split(char **split)
 {
-	while (*split)
+	while (split && *split)
 	{
-		free(*split);
+		if (*split)
+			free(*split);
 		split++;
 	}
 	free(*split);
+}
+
+void	ft_free_bin(t_bin **bin)
+{
+	t_bin *bin_buf;
+
+	while (*bin)
+	{
+		bin_buf = *bin;
+		*bin = (*bin)->next;
+		free(bin_buf->name);
+		free(bin_buf->path);
+		free(bin_buf);
+	}
 }
