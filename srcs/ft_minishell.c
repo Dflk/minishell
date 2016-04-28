@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/13 13:06:19 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/20 10:36:56 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/04/22 16:39:42 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@ static void	ft_checkcmd(char *cmdline, t_conf *config)
 	int			builtin;
 	t_bin		*cmd;
 
+	cmd = NULL;
 	if (!cmdline || !*cmdline || !(cmdline_split = ft_strsplit(cmdline, ' ')))
 		return ;
 	if ((builtin = ft_findbuiltin(*cmdline_split)) != -1)
 		(tabf[builtin])(config, cmdline_split);
-	else if ((cmd = ft_findcmd(*cmdline_split, config->bin)))
+	else if (*cmdline_split[0] == '/' ||
+			*cmdline_split[0] == '.' ||
+			(cmd = ft_findcmd(*cmdline_split, config->bin)))
 		ft_execcmd(cmd, cmdline_split, config);
 	else
 		ft_error(*cmdline_split, CMD_NOTFOUND, KEEP);

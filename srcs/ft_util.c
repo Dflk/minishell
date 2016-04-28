@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 11:50:38 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/19 11:51:56 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/04/22 12:27:01 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_splitsize(char **split)
 	size_t	ret;
 
 	ret = 0;
-	while (*split++)
+	while (split && *split++)
 		ret++;
 	return (ret);
 }

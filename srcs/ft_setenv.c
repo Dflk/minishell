@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 10:09:22 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/20 16:22:44 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/04/22 09:02:52 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static char	*ft_mallocenv(char **cmd_split)
 {
 	char	*env_variable;
 	char	*buf;
-	char	*buf2;
 
 	if ((env_variable = ft_strdup(*(cmd_split + 1))))
 	{

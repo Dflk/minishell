@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/12 12:55:30 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/20 11:33:55 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/04/22 10:32:19 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@
 # define FILE_PERMDENIED	"permission denied"
 # define FEW_ARG			"Too few arguments"
 # define MANY_ARG			"Too many arguments"
+
+/*
+** Binary mask (param cmd env)
+*/
+# define PARAM_V 0000000
+# define PARAM_I 0000001
 
 /*
 ** Error function
