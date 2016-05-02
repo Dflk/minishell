@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/13 10:25:02 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/20 14:19:47 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/02 10:52:19 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ static t_bin	*ft_fillconfbins(DIR *directory, char *path)
 	t_bin			*bin_buf_begin;
 	t_bin			*bin_buf;
 
-	while ((readfile = readdir(directory)))
+	bin_buf_begin = NULL;
+	while ((readfile = readdir(directory)) != NULL)
 		if (ft_strcmp(readfile->d_name, ".") &&
 				ft_strcmp(readfile->d_name, ".."))
 		{
@@ -57,13 +58,11 @@ static t_bin	*ft_readconfpaths(char **paths_bin)
 {
 	DIR			*directory;
 	struct stat	stats;
-	char		**paths_bin_buf;
 	t_bin		*bin;
 	t_bin		*bin_last;
 
-	paths_bin_buf = paths_bin;
 	bin = NULL;
-	while (*paths_bin)
+	while (paths_bin && *paths_bin)
 	{
 		if (!(stat(*paths_bin, &stats)))
 			if ((directory = opendir(*paths_bin)))

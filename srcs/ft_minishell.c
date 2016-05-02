@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/13 13:06:19 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/22 16:39:42 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/02 18:30:35 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ void		ft_minishell(t_conf *config)
 	char	*cmdline;
 
 	ft_printprompt();
-	signal(SIGINT, SIG_IGN);
-	while (get_next_line(0, &cmdline))
+	signal(SIGINT, (&sigint));
+	while (1)
 	{
+		cmdline = ft_scaninput(config);
 		ft_checkcmd(cmdline, config);
 		ft_printprompt();
 		free(cmdline);

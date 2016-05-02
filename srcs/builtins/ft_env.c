@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 14:19:42 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/22 16:40:25 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/02 10:33:39 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static void	ft_parsesetenv(char **cmd_split, t_conf *env_send)
 void		ft_env(t_conf *config, char **cmd_split)
 {
 	unsigned char	params;
-	char			**cmd_split_buf;
 	t_conf			env_send;
 
 	if (!*(cmd_split + 1))
@@ -72,7 +71,6 @@ void		ft_env(t_conf *config, char **cmd_split)
 		ft_printenv(config->env);
 		return ;
 	}
-	cmd_split_buf = cmd_split;
 	params = 0;
 	cmd_split = ft_parseparam(cmd_split + 1, &params);
 	if (params & PARAM_I)

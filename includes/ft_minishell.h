@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/12 12:55:30 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/22 10:32:19 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/02 18:36:49 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <dirent.h>
-# include <errno.h>
 # include <signal.h>
+# include <termcap.h>
+# include <termios.h>
 
 /*
 ** Flag error_exit
@@ -35,6 +36,8 @@
 # define FILE_PERMDENIED	"permission denied"
 # define FEW_ARG			"Too few arguments"
 # define MANY_ARG			"Too many arguments"
+# define BACKUP_TERM		"Sry dude, can not create termios backup"
+# define SET_TERM			"Sry dude, can not set termios attr"
 
 /*
 ** Binary mask (param cmd env)
@@ -72,6 +75,11 @@ void	ft_free_split(char **split);
 void	ft_free_bin(t_bin **bin);
 
 /*
+** Signals
+*/
+void	sigint(int signal);
+
+/*
 ** Shell prompt
 */
 void	ft_printprompt(void);
@@ -102,5 +110,11 @@ int		ft_findbuiltin(char *cmd);
 ** Utils
 */
 size_t	ft_splitsize(char **split);
+
+/*
+** Scan input
+*/
+char	*ft_scaninput(t_conf *config);
+void	ft_scanchr(char *buf, char **cmdline, t_conf *config);
 
 #endif
