@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 12:51:24 by rbaran            #+#    #+#             */
-/*   Updated: 2016/04/19 12:53:45 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/04 13:31:39 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,14 @@ typedef struct	s_conf
 	t_bin	*bin;
 	char	**env;
 }				t_conf;
+
+typedef struct	s_ctlinput
+{
+	struct winsize	*termsize;
+	int				initposX;
+	int				posX;
+	int				posY;
+	int				len_cmd;
+}				t_ctlinput;
 
 #endif

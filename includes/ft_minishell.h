@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/12 12:55:30 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/02 18:36:49 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/05 16:46:19 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "minishell_typedefs.h"
 # include <sys/stat.h>
 # include <sys/wait.h>
+# include <sys/ioctl.h>
 # include <dirent.h>
 # include <signal.h>
 # include <termcap.h>
@@ -115,6 +116,11 @@ size_t	ft_splitsize(char **split);
 ** Scan input
 */
 char	*ft_scaninput(t_conf *config);
-void	ft_scanchr(char *buf, char **cmdline, t_conf *config);
+void	ft_scanchr(char *buf, char **cmdline, t_conf *config, t_ctlinput *ctl);
+void	ft_movearrow(char *buf, t_ctlinput *ctl);
+int		ft_putchar_int(int c);
+void	ft_savecursor(void);
+void	ft_restorecursor(void);
+void	ft_erase(void);
 
 #endif

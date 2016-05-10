@@ -6,24 +6,43 @@
 /*   By: rbaran <rbaran@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 12:01:46 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/02 17:52:49 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/04 19:19:49 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_minishell.h>
 #include <stdio.h>
 
-static void	ft_scan(char **cmdline, t_conf *config)
+static int	ft_checkfirstpos(void)
 {
-	char	buf[5];
-	int		ret;
+	char	buf[256];
+	char	*buffer;
 
+	if (getcwd(buf, 256))
+	{
+		if ((buffer = ft_strrchr((char *)buf, '/')) && *(buffer + 1))
+			return ((int)ft_strlen(buffer + 1) + 3);
+		else
+			return ((int)ft_strlen((char *)buf + 3));
+	}
+	return (0);
+}
+
+static void	ft_scan(char **cmdline, t_conf *config, t_ctlinput ctl)
+{
+	char		buf[5];
+	int			ret;
+
+	ctl.initposX = ft_checkfirstpos();
+	ctl.posX = ctl.initposX;
+	ctl.len_cmd = ctl.posX;
+	ctl.posY = 0;
 	while ((ret = read(0, buf, 4)) != -1)
 	{
 		buf[ret] = '\0';
 		if (buf[0] == '\n')
 			return ;
-		ft_scanchr((char*)buf, cmdline, config);
+		ft_scanchr((char*)buf, cmdline, config, &ctl);
 	}
 }
 
@@ -55,11 +74,14 @@ static void	ft_termios(void)
 
 char		*ft_scaninput(t_conf *config)
 {
-	char	*cmdline;
+	char			*cmdline;
+	t_ctlinput		ctl;
 
 	cmdline = NULL;
 	ft_termios();
-	ft_scan(&cmdline, config);
+	if ((ctl.termsize = (struct winsize*)ft_memalloc(sizeof(struct winsize))))
+		ioctl(0, TIOCGWINSZ, ctl.termsize);
+	ft_scan(&cmdline, config, ctl);
 	ft_termios();
 	ft_putchar('\n');
 	return (cmdline);

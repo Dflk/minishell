@@ -6,57 +6,61 @@
 /*   By: rbaran <rbaran@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 15:22:38 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/02 20:26:26 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/05 20:53:43 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_minishell.h>
 #include <stdio.h>
 
-static int	ft_putchar_int(int c)
+static void	ft_editrmcmd(char **cmdline, t_ctlinput *ctl)
 {
-	write(1, &c, 1);
-	return (0);
+	if (!*cmdline || ctl->posX == ctl->initposX)
+		return ;
+	ctl->posX--;
+	ft_movearrow("le", ctl);
+	ctl->len_cmd--;
+	ft_memmove((*cmdline) + (ctl->posX - ctl->initposX),
+				((*cmdline) + (ctl->posX - ctl->initposX + 1)),
+				ft_strlen((*cmdline) + (ctl->posX - ctl->initposX + 1)) + 1);
+	ft_savecursor();
+	ft_putstr((*cmdline) + (ctl->posX - ctl->initposX));
+	ft_erase();
+	ft_restorecursor();
 }
 
-static void	ft_editcmd(char *buf, char **cmdline)
+static void	ft_editcmd(char *buf, char **cmdline, t_ctlinput *ctl)
 {
 	char	*kill;
 
+	ctl->len_cmd++;
 	if (!*cmdline)
 		*cmdline = ft_strdup(buf);
 	else
 	{
 		kill = *cmdline;
-		*cmdline = ft_strjoin(*cmdline, buf);
-		free(kill);
+		if ((*cmdline = ft_strnew(ctl->len_cmd + 1)))
+		{
+			ft_strncpy(*cmdline, kill, ctl->posX - ctl->initposX);
+			ft_strcat(*cmdline, buf);
+			ft_strcat(*cmdline, kill + ctl->posX - ctl->initposX);
+			free(kill);
+		}
 	}
-	ft_putstr(buf);
+	ft_savecursor();
+	ft_putstr((*cmdline) + (ctl->posX - ctl->initposX));
+	ctl->posX++;
+	if (ctl->posX + 1 != ctl->len_cmd)
+	{
+		ft_restorecursor();
+		ft_movearrow("nd", ctl);
+	}
+	if (ctl->posX / ctl->termsize->ws_col != ctl->posY)
+		ctl->posY++;
 }
 
-static void	ft_termcap(char *buf)
-{
-	char	*res;
-	int		width;
-
-	res = NULL;
-	if (buf[2] == 67)
-		res = tgetstr("nd", NULL);
-	else if (buf[2] == 68)
-		res = tgetstr("le", NULL);
-	else
-	{
-		width = tgetnum("co");
-		printf("%d\n", width);
-	}
-	if (res)
-	{
-		tputs(res, 0, &ft_putchar_int);
-		dprintf(1, "\033[6n");
-	}
-}
-
-void		ft_scanchr(char *buf, char **cmdline, t_conf *config)
+void		ft_scanchr(char *buf, char **cmdline, t_conf *config,
+				t_ctlinput *ctl)
 {
 	static int	success = 0;
 	char		**split_env;
@@ -64,10 +68,22 @@ void		ft_scanchr(char *buf, char **cmdline, t_conf *config)
 	if (buf[0] == '\t')
 		return ;
 	if (success == 0 && (split_env = ft_parseenv(config->env, "TERM"))
-		&& *(split_env + 1))
+			&& *(split_env + 1))
 		success = tgetent(NULL, *(split_env + 1));
-	if (success == 1 && buf[0] == 033)
-		ft_termcap(buf);
-	if (buf[1] == '\0' || buf[2] == '\0')
-		ft_editcmd(buf, cmdline);
+	if (success == 1 && buf[0] == 127)
+		ft_editrmcmd(cmdline, ctl);
+	else if (success == 1 && buf[0] == 033 && buf[2] == 67
+			&& ctl->posX < ctl->len_cmd)
+	{
+		ctl->posX++;
+		ft_movearrow("nd", ctl);
+	}
+	else if (success == 1 && buf[0] == 033 && buf[2] == 68
+			&& ctl->posX > ctl->initposX)
+	{
+		ctl->posX--;
+		ft_movearrow("le", ctl);
+	}
+	else if (buf[1] == '\0' || buf[2] == '\0')
+		ft_editcmd(buf, cmdline, ctl);
 }
