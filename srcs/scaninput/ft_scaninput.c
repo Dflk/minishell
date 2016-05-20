@@ -6,7 +6,7 @@
 /*   By: rbaran <rbaran@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 12:01:46 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/04 19:19:49 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/20 15:35:43 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	ft_scan(char **cmdline, t_conf *config, t_ctlinput ctl)
 		buf[ret] = '\0';
 		if (buf[0] == '\n')
 			return ;
-		ft_scanchr((char*)buf, cmdline, config, &ctl);
+		ft_scanchr(((unsigned int*)buf)[0], cmdline, config, &ctl);
 	}
 }
 
@@ -79,10 +79,13 @@ char		*ft_scaninput(t_conf *config)
 
 	cmdline = NULL;
 	ft_termios();
-	if ((ctl.termsize = (struct winsize*)ft_memalloc(sizeof(struct winsize))))
-		ioctl(0, TIOCGWINSZ, ctl.termsize);
+	if (!(ctl.termsize = (struct winsize*)ft_memalloc(sizeof(struct winsize))))
+		ft_error(NULL, GET_TERM_SIZE, EXIT);
+	if (ioctl(0, TIOCGWINSZ, ctl.termsize) == -1)
+		ft_error(NULL, GET_TERM_SIZE, EXIT);
 	ft_scan(&cmdline, config, ctl);
 	ft_termios();
 	ft_putchar('\n');
+	free(ctl.termsize);
 	return (cmdline);
 }

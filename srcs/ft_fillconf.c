@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/13 10:25:02 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/02 10:52:19 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/20 14:53:09 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,25 +86,31 @@ static t_bin	*ft_readconfpaths(char **paths_bin)
 
 t_conf			*ft_fillconf(char **env)
 {
-	char	**split_bins;
+	char	**split;
 	char	**split_path_bins;
 	t_conf	*config;
 
 	if (!(config = ft_memalloc(sizeof(t_conf))))
 		return (NULL);
 	config->env = ft_fillenv(env, ft_splitsize(env));
-	split_bins = NULL;
+	split = NULL;
 	split_path_bins = NULL;
-	if ((split_bins = ft_parseenv(config->env, "PATH")))
+	if ((split = ft_parseenv(config->env, "PATH")))
 	{
-		if ((split_path_bins = ft_strsplit(split_bins[1], ':')))
+		if ((split_path_bins = ft_strsplit(split[1], ':')))
 		{
 			config->bin = ft_readconfpaths(split_path_bins);
 			ft_free_split(split_path_bins);
 			free(split_path_bins);
 		}
-		ft_free_split(split_bins);
-		free(split_bins);
+		ft_free_split(split);
+		free(split);
 	}
+	if ((split = ft_parseenv(config->env, "TERM")))
+	{
+		config->term = tgetent(NULL, *(split + 1));
+		ft_free_split(split);
+		free(split);
+	}	
 	return (config);
 }

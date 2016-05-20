@@ -6,7 +6,7 @@
 /*   By: rbaran <rbaran@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 15:22:38 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/05 20:53:43 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/20 15:35:24 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,31 +59,25 @@ static void	ft_editcmd(char *buf, char **cmdline, t_ctlinput *ctl)
 		ctl->posY++;
 }
 
-void		ft_scanchr(char *buf, char **cmdline, t_conf *config,
+void		ft_scanchr(unsigned int buf, char **cmdline, t_conf *config,
 				t_ctlinput *ctl)
 {
-	static int	success = 0;
-	char		**split_env;
-
 	if (buf[0] == '\t')
 		return ;
-	if (success == 0 && (split_env = ft_parseenv(config->env, "TERM"))
-			&& *(split_env + 1))
-		success = tgetent(NULL, *(split_env + 1));
-	if (success == 1 && buf[0] == 127)
+	if (config->term == 1 && buf[0] == 127)
 		ft_editrmcmd(cmdline, ctl);
-	else if (success == 1 && buf[0] == 033 && buf[2] == 67
+	else if (config->term == 1 && buf[0] == 033 && buf[2] == 67
 			&& ctl->posX < ctl->len_cmd)
 	{
 		ctl->posX++;
 		ft_movearrow("nd", ctl);
 	}
-	else if (success == 1 && buf[0] == 033 && buf[2] == 68
+	else if (config->term == 1 && buf[0] == 033 && buf[2] == 68
 			&& ctl->posX > ctl->initposX)
 	{
 		ctl->posX--;
 		ft_movearrow("le", ctl);
 	}
-	else if (buf[1] == '\0' || buf[2] == '\0')
+	else if (ft_isprint(buf))
 		ft_editcmd(buf, cmdline, ctl);
 }

@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/12 12:55:30 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/05 16:46:19 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/20 15:45:04 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_MINISHELL_H
 # include <libft.h>
 # include "minishell_typedefs.h"
+# include "minishell_keymap.h"
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <sys/ioctl.h>
@@ -39,12 +40,16 @@
 # define MANY_ARG			"Too many arguments"
 # define BACKUP_TERM		"Sry dude, can not create termios backup"
 # define SET_TERM			"Sry dude, can not set termios attr"
+# define GET_TERM_SIZE		"Sry dude, can't get terminal size for some reasons"
+# define TERM_NOTFOUND		"TERM environment variable is not set, you won't be able to edit the command line"
 
 /*
-** Binary mask (param cmd env)
+** Binary mask (param builtin env)
 */
-# define PARAM_V 0000000
-# define PARAM_I 0000001
+# define PARAM_V 0000001
+# define PARAM_I 0000002
+# define PARAM_P 0000004
+# define PARAM_S 0000010
 
 /*
 ** Error function
@@ -116,7 +121,7 @@ size_t	ft_splitsize(char **split);
 ** Scan input
 */
 char	*ft_scaninput(t_conf *config);
-void	ft_scanchr(char *buf, char **cmdline, t_conf *config, t_ctlinput *ctl);
+void	ft_scanchr(unsigned int buf, char **cmdline, t_conf *config, t_ctlinput *ctl);
 void	ft_movearrow(char *buf, t_ctlinput *ctl);
 int		ft_putchar_int(int c);
 void	ft_savecursor(void);
