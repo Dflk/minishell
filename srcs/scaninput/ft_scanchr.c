@@ -6,7 +6,7 @@
 /*   By: rbaran <rbaran@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 15:22:38 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/20 15:35:24 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/25 16:51:49 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	ft_editcmd(char *buf, char **cmdline, t_ctlinput *ctl)
 		ctl->posY++;
 }
 
-void		ft_scanchr(unsigned int buf, char **cmdline, t_conf *config,
+void		ft_scanchr(char *buf, char **cmdline, t_conf *config,
 				t_ctlinput *ctl)
 {
 	if (buf[0] == '\t')
@@ -78,6 +78,6 @@ void		ft_scanchr(unsigned int buf, char **cmdline, t_conf *config,
 		ctl->posX--;
 		ft_movearrow("le", ctl);
 	}
-	else if (ft_isprint(buf))
+	else if (ft_isprint(buf[0]))
 		ft_editcmd(buf, cmdline, ctl);
 }

@@ -1,25 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_findcmd.c                                       :+:      :+:    :+:   */
+/*   ft_hash.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/04/13 16:18:49 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/25 15:41:06 by rbaran           ###   ########.fr       */
+/*   Created: 2016/05/25 13:01:04 by rbaran            #+#    #+#             */
+/*   Updated: 2016/05/25 15:41:31 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_minishell.h>
 #include <stdio.h>
 
-t_bin	*ft_findcmd(char *cmd, t_bin *cmds)
+t_bin		*ft_hashsearch(t_conf *config, char *cmd)
 {
-	while (cmds)
+	int	i;
+
+	i = 0;
+	while (config->hashtable[i])
 	{
-		if (!ft_strcmp(cmds->name, cmd))
-			return (cmds);
-		cmds = cmds->next;
+		if ((config->hashtable[i])->name[0] == *cmd)
+			return (config->hashtable[i]);
+		i++;
 	}
 	return (NULL);
+}
+
+void		ft_hashtable(t_conf *config)
+{
+	char	letter;
+	t_bin	*bin;
+	int		i;
+
+	bin = config->bin;
+	letter = -1;
+	i = 0;
+	while (bin)
+	{
+		if (letter != bin->name[0])
+		{
+			letter = bin->name[0];
+			config->hashtable[i] = bin;
+			i++;
+		}
+		bin = bin->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/13 10:57:15 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/02 17:48:54 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/25 11:57:38 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ char	**ft_parseenv(char **env, char *name)
 			if (*split && ft_strcmp(split[0], name) == 0)
 				return (split);
 			ft_free_split(split);
-			free(split);
 		}
 		env++;
 	}
@@ -67,7 +66,6 @@ int		ft_findenv(char **env, char *variable)
 			if (ft_strcmp(split[0], variable) == 0)
 				ret = i;
 			ft_free_split(split);
-			free(split);
 			if (ret != -1)
 				return (ret);
 		}

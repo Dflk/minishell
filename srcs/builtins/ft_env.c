@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 14:19:42 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/02 10:33:39 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/25 11:58:02 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static void	ft_parsesetenv(char **cmd_split, t_conf *env_send)
 			new_env[size_split + 1] = NULL;
 			new_env[size_split] = ft_strdup(*cmd_split);
 			ft_free_split(env_send->env);
-			free(env_send->env);
 		}
 		env_send->env = new_env;
 	}

@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/12 12:55:30 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/20 15:45:04 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/25 15:49:14 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define FT_MINISHELL_H
 # include <libft.h>
 # include "minishell_typedefs.h"
-# include "minishell_keymap.h"
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <sys/ioctl.h>
@@ -86,6 +85,12 @@ void	ft_free_bin(t_bin **bin);
 void	sigint(int signal);
 
 /*
+** Hash function
+*/
+void	ft_hashtable(t_conf *config);
+t_bin	*ft_hashsearch(t_conf *config, char *cmd);
+
+/*
 ** Shell prompt
 */
 void	ft_printprompt(void);
@@ -121,7 +126,7 @@ size_t	ft_splitsize(char **split);
 ** Scan input
 */
 char	*ft_scaninput(t_conf *config);
-void	ft_scanchr(unsigned int buf, char **cmdline, t_conf *config, t_ctlinput *ctl);
+void	ft_scanchr(char *buf, char **cmdline, t_conf *config, t_ctlinput *ctl);
 void	ft_movearrow(char *buf, t_ctlinput *ctl);
 int		ft_putchar_int(int c);
 void	ft_savecursor(void);

@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/13 13:06:19 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/05 16:02:26 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/25 15:46:41 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static void	ft_checkcmd(char *cmdline, t_conf *config)
 		(tabf[builtin])(config, cmdline_split);
 	else if (*cmdline_split[0] == '/' ||
 			*cmdline_split[0] == '.' ||
-			(cmd = ft_findcmd(*cmdline_split, config->bin)))
+			(cmd = ft_findcmd(*cmdline_split, ft_hashsearch(config,
+															*cmdline_split))))
 		ft_execcmd(cmd, cmdline_split, config);
 	else
 		ft_error(*cmdline_split, CMD_NOTFOUND, KEEP);

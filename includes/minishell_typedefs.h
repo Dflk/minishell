@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 12:51:24 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/20 14:03:34 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/25 15:34:26 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct	s_bin
 typedef struct	s_conf
 {
 	t_bin	*bin;
+	t_bin	*hashtable[63];
 	char	**env;
 	char	term;
 }				t_conf;
