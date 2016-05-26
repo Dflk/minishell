@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/14 10:41:48 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/25 15:44:58 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/26 19:28:28 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,15 @@ void		ft_execcmd(t_bin *cmd, char **cmdline_split, t_conf *config)
 	pid_t	father;
 	int		stat_loc;
 
+	fullpath = cmd ? ft_strjoin(cmd->path, cmd->name) : *cmdline_split;
+	if ((cmd && !(ft_access(fullpath, FILES))) || !ft_access(fullpath, FILES))
+	{
+		if (cmd)
+			free(fullpath);
+		return ;
+	}
 	if ((father = fork()) == -1)
 		return ;
-	if (cmd)
-		fullpath = ft_strjoin(cmd->path, cmd->name);
-	else
-		fullpath = *cmdline_split;
 	if (father == 0)
 	{
 		execve(fullpath, cmdline_split, config->env);

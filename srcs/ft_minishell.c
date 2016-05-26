@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/13 13:06:19 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/25 15:46:41 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/26 21:17:27 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,39 @@ static void	ft_checkcmd(char *cmdline, t_conf *config)
 		ft_error(*cmdline_split, CMD_NOTFOUND, KEEP);
 }
 
+static void	ft_splitcmd(t_conf *config, char *cmdline)
+{
+	char	**split;
+	char	**splitbuf;
+
+	if ((split = ft_strsplit(cmdline, ';')))
+	{
+		splitbuf = split;
+		while (split && *split)
+		{
+			ft_checkcmd(*split, config);
+			split++;
+		}
+		ft_free_split(splitbuf);
+		free(splitbuf);
+	}
+}
+
 void		ft_minishell(t_conf *config)
 {
-	char	*cmdline;
+	static char	*cmdline = NULL;
 
 	ft_printprompt();
-	signal(SIGINT, (&sigint));
+	signal(SIGINT, SIG_IGN);
+	if (cmdline)
+	{
+		free(cmdline);
+		cmdline = NULL;
+	}
 	while (1)
 	{
 		cmdline = ft_scaninput(config);
-		ft_checkcmd(cmdline, config);
+		ft_splitcmd(config, cmdline);
 		ft_printprompt();
 	}
 }
