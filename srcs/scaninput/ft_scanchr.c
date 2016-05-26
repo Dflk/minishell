@@ -6,7 +6,7 @@
 /*   By: rbaran <rbaran@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 15:22:38 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/25 16:51:49 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/26 18:38:23 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,14 @@ static void	ft_editrmcmd(char **cmdline, t_ctlinput *ctl)
 {
 	if (!*cmdline || ctl->posX == ctl->initposX)
 		return ;
-	ctl->posX--;
-	ft_movearrow("le", ctl);
-	ctl->len_cmd--;
+	ft_moveleft(ctl);
 	ft_memmove((*cmdline) + (ctl->posX - ctl->initposX),
 				((*cmdline) + (ctl->posX - ctl->initposX + 1)),
 				ft_strlen((*cmdline) + (ctl->posX - ctl->initposX + 1)) + 1);
+	ft_erase(ctl);
+	ctl->len_cmd--;
 	ft_savecursor();
 	ft_putstr((*cmdline) + (ctl->posX - ctl->initposX));
-	ft_erase();
 	ft_restorecursor();
 }
 
@@ -49,35 +48,39 @@ static void	ft_editcmd(char *buf, char **cmdline, t_ctlinput *ctl)
 	}
 	ft_savecursor();
 	ft_putstr((*cmdline) + (ctl->posX - ctl->initposX));
-	ctl->posX++;
-	if (ctl->posX + 1 != ctl->len_cmd)
+	ft_restorecursor();
+	ft_moveright(ctl);
+}
+
+int			ft_moveaction(unsigned int buf)
+{
+	static unsigned int	tabvalue[2] = {LEF, RIG};
+	int i;
+
+	i = 0;
+	while (i < 2)
 	{
-		ft_restorecursor();
-		ft_movearrow("nd", ctl);
+		if (tabvalue[i] == buf)
+			return (i);
+		i++;
 	}
-	if (ctl->posX / ctl->termsize->ws_col != ctl->posY)
-		ctl->posY++;
+	return (-1);
 }
 
 void		ft_scanchr(char *buf, char **cmdline, t_conf *config,
-				t_ctlinput *ctl)
+					t_ctlinput *ctl)
 {
-	if (buf[0] == '\t')
+	static void	(*move[2])(t_ctlinput *ctl) = {&ft_moveleft,
+			&ft_moveright};
+	int			i;
+
+	if (((unsigned int*)buf)[0] == TAB)
 		return ;
-	if (config->term == 1 && buf[0] == 127)
-		ft_editrmcmd(cmdline, ctl);
-	else if (config->term == 1 && buf[0] == 033 && buf[2] == 67
-			&& ctl->posX < ctl->len_cmd)
-	{
-		ctl->posX++;
-		ft_movearrow("nd", ctl);
-	}
-	else if (config->term == 1 && buf[0] == 033 && buf[2] == 68
-			&& ctl->posX > ctl->initposX)
-	{
-		ctl->posX--;
-		ft_movearrow("le", ctl);
-	}
-	else if (ft_isprint(buf[0]))
+	if (ft_isprint(((unsigned int*)buf)[0]))
 		ft_editcmd(buf, cmdline, ctl);
+	else if (config->term == 1 && ((unsigned int*)buf)[0] == SUP)
+		ft_editrmcmd(cmdline, ctl);
+	else if (config->term == 1 &&
+			(i = ft_moveaction(((unsigned int*)buf)[0])) != -1)
+		(move[i])(ctl);
 }
