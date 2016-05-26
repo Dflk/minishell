@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 14:19:42 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/25 11:58:02 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/26 19:29:33 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,42 +22,34 @@ static char	**ft_parseparam(char **cmd_split, unsigned char *params)
 	{
 		i = 0;
 		while ((*cmd_split)[++i] != '\0')
-		{
 			if ((*cmd_split)[i] == 'i')
 				*params |= PARAM_I;
-			else if ((*cmd_split)[i] == 'v')
-				*params |= PARAM_V;
-		}
 		cmd_split++;
 	}
 	return (cmd_split);
 }
 
-static void	ft_parsesetenv(char **cmd_split, t_conf *env_send)
+static void	ft_createenv(t_conf *config, char *cmd_split)
 {
-	size_t	size_split;
-	char	**new_env;
+	char	*split_final[4];
+	char	**split;
 
-	size_split = ft_splitsize(env_send->env);
-	if (size_split == 0)
-		new_env = (char**)ft_memalloc(sizeof(char*) * 2);
-	else
-		new_env = ft_fillenv(env_send->env, size_split + 1);
-	if (new_env)
+	if (!(split = ft_strsplit(cmd_split, '=')))
+		return ;
+	if (!(config->env))
 	{
-		if (size_split == 0)
-		{
-			new_env[0] = ft_strdup(*cmd_split);
-			new_env[1] = NULL;
-		}
-		else
-		{
-			new_env[size_split + 1] = NULL;
-			new_env[size_split] = ft_strdup(*cmd_split);
-			ft_free_split(env_send->env);
-		}
-		env_send->env = new_env;
+		if (!(config->env = ft_memalloc(sizeof(char*) * 2)))
+			return ;
+		(config->env)[0] = NULL;
+		(config->env)[1] = NULL;
 	}
+	split_final[0] = "env";
+	split_final[1] = split[0];
+	split_final[2] = split[1];
+	split_final[3] = NULL;
+	ft_setenv(config, (char**)split_final);
+	ft_free_split(split);
+	free(split);
 }
 
 void		ft_env(t_conf *config, char **cmd_split)
@@ -72,14 +64,18 @@ void		ft_env(t_conf *config, char **cmd_split)
 	}
 	params = 0;
 	cmd_split = ft_parseparam(cmd_split + 1, &params);
-	if (params & PARAM_I)
-		env_send.env = NULL;
-	else
-		env_send.env = ft_fillenv(config->env, ft_splitsize(config->env));
+	env_send.env = (params & PARAM_I) ? NULL :
+		ft_fillenv(config->env, ft_splitsize(config->env));
 	while (cmd_split && *cmd_split && ft_strchr(*cmd_split, '='))
 	{
-		ft_parsesetenv(cmd_split, &env_send);
+		ft_createenv(&env_send, *cmd_split);
 		cmd_split++;
 	}
-	ft_printenv(env_send.env);
+	if (cmd_split && *cmd_split)
+		ft_execcmd(NULL, cmd_split, &env_send);
+	if (env_send.env)
+	{
+		ft_free_split(env_send.env);
+		free(env_send.env);
+	}
 }
