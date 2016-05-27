@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/12 12:55:30 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/26 22:08:59 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/27 16:26:54 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 # define BACKUP_TERM		"Sry dude, can not create termios backup"
 # define SET_TERM			"Sry dude, can not set termios attr"
 # define GET_TERM_SIZE		"Sry dude, can't get terminal size for some reasons"
-# define TERM_NOTFOUND		"TERM environment variable is not set, you won't be able to edit the command line"
+# define TERM_NOTFOUND		"TERM environment variable is not set"
 # define SIG_INT			"Could not set the SIGINT signal"
 # define SIG_STOP			"Could not set the SIGSTOP signal"
 

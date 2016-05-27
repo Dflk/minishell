@@ -6,7 +6,7 @@
 /*   By: rbaran <rbaran@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 12:01:46 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/26 18:38:10 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/27 16:30:32 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static void	ft_scan(char **cmdline, t_conf *config, t_ctlinput ctl)
 	char		buf[8];
 	int			ret;
 
-	ctl.initposX = ft_checkfirstpos();
-	ctl.posX = ctl.initposX;
-	ctl.len_cmd = ctl.posX;
-	ctl.posY = 0;
+	ctl.initposx = ft_checkfirstpos();
+	ctl.posx = ctl.initposx;
+	ctl.len_cmd = ctl.posx;
+	ctl.posy = 0;
 	ft_bzero(buf, 8);
 	while ((ret = read(0, buf, 8)) != -1)
 	{

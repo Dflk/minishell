@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/15 14:43:47 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/26 18:57:39 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/27 16:24:11 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,11 @@ static int	ft_accessdir(char *path)
 
 int			ft_access(char *path, int type)
 {
-
 	if (access(path, F_OK) == -1)
 	{
 		ft_error(path, FILE_NOTFOUND, KEEP);
 		return (0);
 	}
-
 	if (access(path, X_OK) == -1)
 	{
 		ft_error(path, FILE_PERMDENIED, KEEP);

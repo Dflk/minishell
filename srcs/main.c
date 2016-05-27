@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/12 09:11:54 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/26 22:09:11 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/27 16:25:00 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 
 static void	ft_setsignals(void)
 {
-	
 	if (signal(SIGINT, SIG_IGN) == SIG_ERR)
 		ft_error(NULL, SIG_INT, KEEP);
-	if (signal(SIGSTOP, SIG_IGN) == SIG_ERR)
+	if (signal(SIGTSTP, SIG_IGN) == SIG_ERR)
 		ft_error(NULL, SIG_STOP, KEEP);
 }
 
-int		main(int argc, char **argv, char **env)
+int			main(int argc, char **argv, char **env)
 {
 	t_conf	*config;
 

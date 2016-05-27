@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/20 10:09:22 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/26 18:13:03 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/27 16:04:51 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static void	ft_addenv(t_conf *config, char **cmd_split)
 			env_buf = config->env;
 			config->env = new_env;
 			ft_free_split(env_buf);
+			free(env_buf);
 		}
 	}
 }

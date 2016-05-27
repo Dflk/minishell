@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 14:19:42 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/26 19:29:33 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/27 16:23:36 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ void		ft_env(t_conf *config, char **cmd_split)
 		cmd_split++;
 	}
 	if (cmd_split && *cmd_split)
-		ft_execcmd(NULL, cmd_split, &env_send);
+		ft_execcmd(ft_findcmd(*cmd_split, ft_hashsearch(config, *cmd_split)),
+				cmd_split, &env_send);
 	if (env_send.env)
 	{
 		ft_free_split(env_send.env);

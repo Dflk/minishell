@@ -6,7 +6,7 @@
 /*   By: rbaran <rbaran@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 15:22:38 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/26 17:03:38 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/27 16:29:03 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	ft_moveup(t_ctlinput *ctl)
 		return ;
 	tputs(res, 0, &ft_putchar_int);
 	res = tgetstr("nd", NULL);
-	ctl->posY--;
+	ctl->posy--;
 	i = -1;
 	while (++i <= ctl->termsize->ws_col)
 		tputs(res, 0, &ft_putchar_int);
@@ -38,7 +38,7 @@ static void	ft_movedown(t_ctlinput *ctl)
 		return ;
 	tputs(res, 0, &ft_putchar_int);
 	res = tgetstr("le", NULL);
-	ctl->posY++;
+	ctl->posy++;
 	i = ctl->termsize->ws_col;
 	while (--i >= 0)
 		tputs(res, 0, &ft_putchar_int);
@@ -49,10 +49,10 @@ void		ft_moveright(t_ctlinput *ctl)
 	char	*res;
 
 	res = NULL;
-	if (ctl->posX >= ctl->len_cmd)
+	if (ctl->posx >= ctl->len_cmd)
 		return ;
-	ctl->posX++;
-	if (ctl->posX / ctl->termsize->ws_col == ctl->posY)
+	ctl->posx++;
+	if (ctl->posx / ctl->termsize->ws_col == ctl->posy)
 		res = tgetstr("nd", NULL);
 	else
 		ft_movedown(ctl);
@@ -65,10 +65,10 @@ void		ft_moveleft(t_ctlinput *ctl)
 	char	*res;
 
 	res = NULL;
-	if (ctl->posX == ctl->initposX)
+	if (ctl->posx == ctl->initposx)
 		return ;
-	ctl->posX--;
-	if (ctl->posX / ctl->termsize->ws_col == ctl->posY)
+	ctl->posx--;
+	if (ctl->posx / ctl->termsize->ws_col == ctl->posy)
 		res = tgetstr("le", NULL);
 	else
 		ft_moveup(ctl);

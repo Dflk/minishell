@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/19 12:51:24 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/26 20:59:45 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/27 16:27:15 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ typedef struct	s_conf
 {
 	t_bin	*bin;
 	t_bin	*hashtable[63];
-	t_list	*history;
-	t_list	*begin_history;
 	char	**env;
 	char	term;
 }				t_conf;
@@ -35,9 +33,9 @@ typedef struct	s_conf
 typedef struct	s_ctlinput
 {
 	struct winsize	*termsize;
-	int				initposX;
-	int				posX;
-	int				posY;
+	int				initposx;
+	int				posx;
+	int				posy;
 	int				len_cmd;
 }				t_ctlinput;
 

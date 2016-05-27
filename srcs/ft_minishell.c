@@ -6,12 +6,11 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/13 13:06:19 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/26 21:17:27 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/27 15:49:03 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_minishell.h>
-#include <stdio.h>
 
 static void	ft_checkcmd(char *cmdline, t_conf *config)
 {
@@ -33,6 +32,8 @@ static void	ft_checkcmd(char *cmdline, t_conf *config)
 		ft_execcmd(cmd, cmdline_split, config);
 	else
 		ft_error(*cmdline_split, CMD_NOTFOUND, KEEP);
+	ft_free_split(cmdline_split);
+	free(cmdline_split);
 }
 
 static void	ft_splitcmd(t_conf *config, char *cmdline)
@@ -55,19 +56,19 @@ static void	ft_splitcmd(t_conf *config, char *cmdline)
 
 void		ft_minishell(t_conf *config)
 {
-	static char	*cmdline = NULL;
+	char	*cmdline;
 
 	ft_printprompt();
-	signal(SIGINT, SIG_IGN);
-	if (cmdline)
-	{
-		free(cmdline);
-		cmdline = NULL;
-	}
+	cmdline = NULL;
 	while (1)
 	{
 		cmdline = ft_scaninput(config);
 		ft_splitcmd(config, cmdline);
+		if (cmdline)
+		{
+			free(cmdline);
+			cmdline = NULL;
+		}
 		ft_printprompt();
 	}
 }

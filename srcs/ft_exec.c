@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/14 10:41:48 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/26 19:28:28 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/27 15:43:18 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ void		ft_execcmd(t_bin *cmd, char **cmdline_split, t_conf *config)
 		return ;
 	if (father == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		execve(fullpath, cmdline_split, config->env);
+		signal(SIGINT, SIG_IGN);
 		exit(1);
 	}
 	else

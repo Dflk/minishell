@@ -6,7 +6,7 @@
 /*   By: rbaran <rbaran@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 15:22:38 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/26 18:38:23 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/05/27 16:29:40 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 
 static void	ft_editrmcmd(char **cmdline, t_ctlinput *ctl)
 {
-	if (!*cmdline || ctl->posX == ctl->initposX)
+	if (!*cmdline || ctl->posx == ctl->initposx)
 		return ;
 	ft_moveleft(ctl);
-	ft_memmove((*cmdline) + (ctl->posX - ctl->initposX),
-				((*cmdline) + (ctl->posX - ctl->initposX + 1)),
-				ft_strlen((*cmdline) + (ctl->posX - ctl->initposX + 1)) + 1);
+	ft_memmove((*cmdline) + (ctl->posx - ctl->initposx),
+				((*cmdline) + (ctl->posx - ctl->initposx + 1)),
+				ft_strlen((*cmdline) + (ctl->posx - ctl->initposx + 1)) + 1);
 	ft_erase(ctl);
 	ctl->len_cmd--;
 	ft_savecursor();
-	ft_putstr((*cmdline) + (ctl->posX - ctl->initposX));
+	ft_putstr((*cmdline) + (ctl->posx - ctl->initposx));
 	ft_restorecursor();
 }
 
@@ -40,14 +40,14 @@ static void	ft_editcmd(char *buf, char **cmdline, t_ctlinput *ctl)
 		kill = *cmdline;
 		if ((*cmdline = ft_strnew(ctl->len_cmd + 1)))
 		{
-			ft_strncpy(*cmdline, kill, ctl->posX - ctl->initposX);
+			ft_strncpy(*cmdline, kill, ctl->posx - ctl->initposx);
 			ft_strcat(*cmdline, buf);
-			ft_strcat(*cmdline, kill + ctl->posX - ctl->initposX);
+			ft_strcat(*cmdline, kill + ctl->posx - ctl->initposx);
 			free(kill);
 		}
 	}
 	ft_savecursor();
-	ft_putstr((*cmdline) + (ctl->posX - ctl->initposX));
+	ft_putstr((*cmdline) + (ctl->posx - ctl->initposx));
 	ft_restorecursor();
 	ft_moveright(ctl);
 }
@@ -55,7 +55,7 @@ static void	ft_editcmd(char *buf, char **cmdline, t_ctlinput *ctl)
 int			ft_moveaction(unsigned int buf)
 {
 	static unsigned int	tabvalue[2] = {LEF, RIG};
-	int i;
+	int					i;
 
 	i = 0;
 	while (i < 2)
