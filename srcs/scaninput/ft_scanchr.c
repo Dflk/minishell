@@ -6,7 +6,7 @@
 /*   By: rbaran <rbaran@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/02 15:22:38 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/27 16:29:40 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/06/01 17:56:16 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,7 @@ void		ft_scanchr(char *buf, char **cmdline, t_conf *config,
 	else if (config->term == 1 &&
 			(i = ft_moveaction(((unsigned int*)buf)[0])) != -1)
 		(move[i])(ctl);
+	else if (config->term == 1 &&
+		(((unsigned int*)buf)[0] == UPP || ((unsigned int*)buf)[0] == DO))
+		ft_searchhistory(ctl, config, ((unsigned int*)buf)[0], cmdline);
 }

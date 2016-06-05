@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/13 13:06:19 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/27 15:49:03 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/06/01 17:56:21 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ void		ft_minishell(t_conf *config)
 		ft_splitcmd(config, cmdline);
 		if (cmdline)
 		{
+			ft_lst_push_front(&(config->begin_history), cmdline,
+								ft_strlen(cmdline) + 1);
+			config->history = config->begin_history;
 			free(cmdline);
 			cmdline = NULL;
 		}

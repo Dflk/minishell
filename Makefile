@@ -6,7 +6,7 @@
 #    By: rbaran <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/27 09:55:48 by rbaran            #+#    #+#              #
-#    Updated: 2016/05/27 16:42:17 by rbaran           ###   ########.fr        #
+#*   Updated: 2016/06/01 16:08:03 by rbaran           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ SRCS =	srcs/builtins/ft_cd.c \
 		srcs/scaninput/ft_putchar_int.c \
 		srcs/scaninput/ft_saverestore.c \
 		srcs/scaninput/ft_scanchr.c \
-		srcs/scaninput/ft_scaninput.c
+		srcs/scaninput/ft_scaninput.c \
+		srcs/scaninput/ft_history.c
 OBJ = $(SRCS:.c=.o)
 LIBFT = -Llibft/ -lft
 LIBCURSE = -lcurses

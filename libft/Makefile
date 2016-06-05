@@ -6,7 +6,7 @@
 #*   By: rbaran <rbaran@student.42.fr>              +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/02/09 15:10:45 by rbaran            #+#    #+#             *#
-#*   Updated: 2016/02/15 12:30:23 by rbaran           ###   ########.fr       *#
+#*   Updated: 2016/05/30 17:24:46 by rbaran           ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -63,11 +63,14 @@ SRCS =	ft_atoi.c \
 		ft_tolower.c \
 		ft_toupper.c \
 		ft_lstnew.c \
+		ft_lstfindprev.c \
 		ft_lstdelone.c \
 		ft_lstdel.c \
 		ft_lstadd.c \
 		ft_lstiter.c \
 		ft_lstmap.c \
+		ft_lst_push_back.c \
+		ft_lst_push_front.c \
 		ft_convert_base.c \
 		ft_streplace.c \
 		ft_printbits.c \

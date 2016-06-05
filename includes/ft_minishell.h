@@ -6,7 +6,7 @@
 /*   By: rbaran <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/12 12:55:30 by rbaran            #+#    #+#             */
-/*   Updated: 2016/05/27 16:26:54 by rbaran           ###   ########.fr       */
+/*   Updated: 2016/06/01 16:05:16 by rbaran           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,10 @@ int		ft_putchar_int(int c);
 void	ft_savecursor(void);
 void	ft_restorecursor(void);
 void	ft_erase(t_ctlinput *ctl);
+
+/*
+** History
+*/
+void	ft_searchhistory(t_ctlinput *ctl, t_conf *conf, unsigned int buf, char **cmdline);
 
 #endif
